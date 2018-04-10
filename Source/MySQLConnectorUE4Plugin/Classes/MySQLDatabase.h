@@ -125,7 +125,7 @@ class MYSQLCONNECTORUE4PLUGIN_API UMySQLDatabase : public UObject
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "MySQLConnector")
-		static UMySQLConnection* MySQLInitConnection(FString Host, FString UserName, FString UserPassword, FString DatabaseName);
+		static UMySQLConnection* MySQLInitConnection(FString Host, FString UserName, FString UserPassword, FString DatabaseName, int Port=3306);
 
 
 	UFUNCTION(BlueprintCallable, Category = "MySQLConnector|Query")

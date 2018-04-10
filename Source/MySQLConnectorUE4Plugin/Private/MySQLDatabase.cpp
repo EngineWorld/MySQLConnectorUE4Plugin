@@ -8,7 +8,7 @@ UMySQLDatabase::UMySQLDatabase(const FObjectInitializer& ObjectInitializer)
 {
 }
 
-UMySQLConnection* UMySQLDatabase::MySQLInitConnection(FString Host, FString UserName, FString UserPassword, FString DatabaseName) {
+UMySQLConnection* UMySQLDatabase::MySQLInitConnection(FString Host, FString UserName, FString UserPassword, FString DatabaseName, int Port) {
 
 	std::string HostString(TCHAR_TO_UTF8(*Host));
 	std::string UserNameString(TCHAR_TO_UTF8(*UserName));
@@ -32,7 +32,7 @@ UMySQLConnection* UMySQLDatabase::MySQLInitConnection(FString Host, FString User
 			UserNameString.c_str(),
 			UserPasswordString.c_str(),
 			DatabaseNameString.c_str(),
-			0, NULL, 0) == NULL)
+			Port, NULL, 0) == NULL)
 		{
 			cs->isConnected = false;
 		}
