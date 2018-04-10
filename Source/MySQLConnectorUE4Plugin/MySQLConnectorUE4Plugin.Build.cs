@@ -1,18 +1,19 @@
-using UnrealBuildTool;
 using System.IO;
+using Tools.DotNETCommon;
+using UnrealBuildTool;
 
 public class MySQLConnectorUE4Plugin : ModuleRules
 {
-    public MySQLConnectorUE4Plugin(TargetInfo Target)
+    public MySQLConnectorUE4Plugin(ReadOnlyTargetRules Target):base(Target)
     {
         //File.WriteAllText("c:/temp/qqq.txt", this.GetType().Name);
         //string ModulePath = Path.GetDirectoryName( RulesAssembly.GetModuleFilename( this.GetType().Name ) );
 
-        UEBuildConfiguration.bForceEnableExceptions = true;
+        bEnableExceptions = true;
 
         RulesAssembly r;
 		FileReference CheckProjectFile;
-		UProjectInfo.TryGetProjectForTarget("MyGame", out CheckProjectFile);
+		UProjectInfo.TryGetProjectForTarget("MyGame", out CheckProjectFile);//Replace "MyGame" with your project name.
 		
 		r = RulesCompiler.CreateProjectRulesAssembly(CheckProjectFile);
 		FileReference f = r.GetModuleFileName( this.GetType().Name );
