@@ -1,42 +1,56 @@
-using System.IO;
-using Tools.DotNETCommon;
+// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+
 using UnrealBuildTool;
 
 public class MySQLConnectorUE4Plugin : ModuleRules
 {
-    public MySQLConnectorUE4Plugin(ReadOnlyTargetRules Target):base(Target)
-    {
-        //File.WriteAllText("c:/temp/qqq.txt", this.GetType().Name);
-        //string ModulePath = Path.GetDirectoryName( RulesAssembly.GetModuleFilename( this.GetType().Name ) );
-
-        bEnableExceptions = true;
-
-        RulesAssembly r;
-		FileReference CheckProjectFile;
-		UProjectInfo.TryGetProjectForTarget("MyGame", out CheckProjectFile);//Replace "MyGame" with your project name.
+	public MySQLConnectorUE4Plugin(ReadOnlyTargetRules Target) : base(Target)
+	{
+		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
-		r = RulesCompiler.CreateProjectRulesAssembly(CheckProjectFile);
-		FileReference f = r.GetModuleFileName( this.GetType().Name );
-		//File.WriteAllText("c:/temp/qqq2.txt", f.CanonicalName );
+		PublicIncludePaths.AddRange(
+			new string[] {
+				"MySQLConnectorPlugin4UE4/Public"
+				// ... add public include paths required here ...
+			}
+			);
+				
 		
-        string ModulePath = Path.GetDirectoryName( f.CanonicalName );
-        string PlatformString = (Target.Platform == UnrealTargetPlatform.Win64) ? "x64" : "x86";
-        string ThirdPartyPath = Path.GetFullPath( Path.Combine( ModulePath, "../../ThirdParty/" ) );
-       
-	    string LibrariesPath = Path.Combine(ThirdPartyPath, "MySQLConnector", "Lib");
-
-        string LibraryName = Path.Combine(LibrariesPath, "mariadbclient." + PlatformString + ".lib");
-        PublicAdditionalLibraries.Add(LibraryName);
-
-        PrivateIncludePaths.AddRange(new string[] { "MySQLConnectorUE4Plugin/Private" });
-        PublicIncludePaths.AddRange(new string[] { "MySQLConnectorUE4Plugin/Public" });
+		PrivateIncludePaths.AddRange(
+			new string[] {
+				"MySQLConnectorPlugin4UE4/Private",
+				// ... add other private include paths required here ...
+			}
+			);
+			
 		
-		string IncludesPath = Path.Combine(ThirdPartyPath, "MySQLConnector", "Include");
-        PublicIncludePaths.Add(IncludesPath);
-
-		string IncludesPath2 = Path.Combine(ThirdPartyPath, "MySQLConnector", "Include", "cppconn");
-        PublicIncludePaths.Add(IncludesPath2);
-
-        PublicDependencyModuleNames.AddRange(new string[] { "Engine", "Core", "CoreUObject" });
-    }
+		PublicDependencyModuleNames.AddRange(
+			new string[]
+			{
+				"Core",
+				"MariaDBConnectorLibs"
+				// ... add other public dependencies that you statically link with here ...
+			}
+			);
+			
+		
+		PrivateDependencyModuleNames.AddRange(
+			new string[]
+			{
+				"CoreUObject",
+				"Engine",
+				"Slate",
+				"SlateCore",
+				// ... add private dependencies that you statically link with here ...	
+			}
+			);
+		
+		
+		DynamicallyLoadedModuleNames.AddRange(
+			new string[]
+			{
+				// ... add any modules that your module loads dynamically here ...
+			}
+			);
+	}
 }
